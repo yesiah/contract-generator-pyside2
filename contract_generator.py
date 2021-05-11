@@ -14,14 +14,7 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        # ---- works for onedir mode ----
-        # path = os.path.join(pathlib.Path(sys.executable).parent, "templates/contract_templates/cht/中文契約範本.template")
-        # with open(path, 'rb') as f:
-        #     txt = f.read().decode('UTF-8')
-        #     QMessageBox.information(self, "Info", txt)
-        # ---- works for onedir mode ----
 
-        # run-time root: os.path.dirname(__file__)
         run_time_root = os.path.dirname(__file__)
         tmp_path = os.path.join(run_time_root, "templates/contract_templates/cht/中文契約範本.template")
         QMessageBox.information(self, "Info", tmp_path)
