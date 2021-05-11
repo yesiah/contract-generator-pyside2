@@ -3,6 +3,7 @@
 
 block_cipher = None
 
+# include files
 cairocffi_version_path = ("/opt/miniconda3/envs/contract_generator_pyside2/lib/python3.6/site-packages/cairocffi/VERSION", "cairocffi")
 weasyprint_version_path = ("/opt/miniconda3/envs/contract_generator_pyside2/lib/python3.6/site-packages/weasyprint/VERSION", "weasyprint")
 pyphen_dir = ("/opt/miniconda3/envs/contract_generator_pyside2/lib/python3.6/site-packages/pyphen/dictionaries", "pyphen/dictionaries")
@@ -24,6 +25,7 @@ a = Analysis(['contract_generator.py'],
              cipher=block_cipher,
              noarchive=False)
 
+# include the whole directory
 a.datas += Tree("/Users/yhh/github-repo/contract-generator-pyside2/templates", prefix="templates")
 
 pyz = PYZ(a.pure, a.zipped_data,
