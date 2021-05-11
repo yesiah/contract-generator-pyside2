@@ -8,9 +8,6 @@ weasyprint_version_path = ("/opt/miniconda3/envs/contract_generator_pyside2/lib/
 pyphen_dir = ("/opt/miniconda3/envs/contract_generator_pyside2/lib/python3.6/site-packages/pyphen/dictionaries", "pyphen/dictionaries")
 cairosvg_version_path = ("/opt/miniconda3/envs/contract_generator_pyside2/lib/python3.6/site-packages/cairosvg/VERSION", "cairosvg")
 
-#cht_contract_template_path = ("/Users/yhh/github-repo/contract-generator-pyside2/templates/contract_templates/cht/中文契約範本.template", "templates/contract_templates/cht")
-#cht_party_a_template_path = ("/Users/yhh/github-repo/contract-generator-pyside2/templates/party_a_template/cht/cht-甲方.template", "templates/party_a_template/cht")
-
 a = Analysis(['contract_generator.py'],
              pathex=['/Users/yhh/github-repo/contract-generator-pyside2'],
              binaries=[],
@@ -18,9 +15,6 @@ a = Analysis(['contract_generator.py'],
                     weasyprint_version_path,
                     pyphen_dir,
                     cairosvg_version_path],
-                    #cairosvg_version_path,
-                    #cht_contract_template_path,
-                    #cht_party_a_template_path],
              hiddenimports=["weasyprint"],
              hookspath=[],
              runtime_hooks=[],
