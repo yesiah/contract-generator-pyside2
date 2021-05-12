@@ -99,23 +99,15 @@ class MainWindow(QMainWindow):
         # Disable all other controls
         self.disable_controls_below_contract_template_selector()
         # Enable template selector
-        self.ui.contract_template_label.setEnabled(
-            self.ui.lang_selector.currentIndex() != -1)
-        self.ui.contract_template_selector.setEnabled(
-            self.ui.lang_selector.currentIndex() != -1)
+        enable = self.ui.lang_selector.currentIndex() != -1
+        self.ui.contract_template_label.setEnabled(enable)
+        self.ui.contract_template_selector.setEnabled(enable)
         # Add template names to the selector
         if self.ui.contract_template_selector.isEnabled():
             self.ui.contract_template_selector.clear()
-
-            template_dir = util.get_contract_template_dir(
-                self.ui.lang_selector.currentText())
-            QMessageBox.information(self, "Template Dir", template_dir)
-            for _, _, files in os.walk(template_dir):
-                for f in files:
-                    QMessageBox.information(self, "Template File", f)
-                    p = pathlib.Path(f)
-                    if p.suffix == ".template":
-                        self.ui.contract_template_selector.addItem(p.stem)
+            template_dir = util.get_contract_template_dir(self.ui.lang_selector.currentText())
+            templates = [pathlib.Path(f).stem for f in os.listdir(template_dir) if f.endswith(".template")]
+            self.ui.contract_template_selector.addItems(templates)
     
     def on_contract_template_selector_changed(self):
         return
