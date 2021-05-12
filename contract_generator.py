@@ -8,6 +8,7 @@ import markdown
 from weasyprint import HTML
 
 from contract_generator_ui_model import Ui_MainWindow
+import util
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -28,8 +29,93 @@ class MainWindow(QMainWindow):
         #     txt = f.read().decode('UTF-8')
         #     QMessageBox.information(self, "Info", txt)
     
+    def field2control(self, field):
+        return {
+            "start_date": [self.ui.start_date_label, self.ui.start_date_selector],
+            "end_date": [self.ui.end_date_label, self.ui.end_date_selector],
+            "party_a_name": [self.ui.party_a_name_label, self.ui.party_a_name_selector],
+            "party_a_representative": [self.ui.party_a_representative_label, self.ui.party_a_representative_selector],
+            "party_a_registered_address": [self.ui.party_a_registered_address_label, self.ui.party_a_registered_address_edit,
+                                           self.ui.party_a_contact_address_label, self.ui.party_a_contact_address_edit],
+            "party_b_name": [self.ui.party_b_name_label, self.ui.party_b_name_edit],
+            "party_b_representative": [self.ui.party_b_representative_label, self.ui.party_b_representative_edit],
+            "party_b_registered_address": [self.ui.party_b_registered_address_label, self.ui.party_b_registered_address_edit,
+                                           self.ui.party_b_contact_address_label, self.ui.party_b_contact_address_edit],
+            "signature_date": [self.ui.signature_date_label, self.ui.signature_date_selector],
+            "payment_method": [self.ui.payment_method_label, self.ui.payment_method_selector],
+            "currency": [self.ui.currency_label, self.ui.currency_selector],
+            "cross_border_payment": [self.ui.cross_border_payment_group, self.ui.cross_border_payment_yes, self.ui.cross_border_payment_no],
+            "bank_account": [self.ui.bank_account_label, self.ui.bank_account_edit],
+            "account_name": [self.ui.account_name_label, self.ui.account_name_edit],
+            "name_of_the_bank": [self.ui.name_of_the_bank_label, self.ui.name_of_the_bank_edit],
+            "bank_code": [self.ui.bank_code_label, self.ui.bank_code_edit],
+            "name_of_the_branch": [self.ui.name_of_the_branch_label, self.ui.name_of_the_branch_edit],
+            "branch_code": [self.ui.branch_code_label, self.ui.branch_code_edit],
+            "country_of_the_bank_receiving_the_payment": [self.ui.country_of_the_bank_receiving_the_payment_label, self.ui.country_of_the_bank_receiving_the_payment_edit],
+            "swift_code": [self.ui.swift_code_label, self.ui.swift_code_edit],
+            "other_code": [self.ui.other_code_group,
+                           self.ui.other_code_cnaps,
+                           self.ui.other_code_skn_code,
+                           self.ui.other_code_bsb_number,
+                           self.ui.other_code_iban_code],
+            "other_code_text": [self.ui.other_code_edit]
+        }.get(field)
+    
+    def fields2controls(self, fields):
+        controls = []
+        for field in fields:
+            controls.extend(self.field2control(field))
+
+        return controls
+    
+    # internal functions
+    def disable_controls_below_contract_template_selector(self):
+        fields = ["start_date",
+                  "end_date",
+                  "party_a_name",
+                  "party_a_representative",
+                  "party_a_registered_address",
+                  "party_b_name",
+                  "party_b_representative",
+                  "party_b_registered_address",
+                  "signature_date",
+                  "payment_method",
+                  "currency",
+                  "cross_border_payment",
+                  "bank_account",
+                  "account_name",
+                  "name_of_the_bank",
+                  "bank_code",
+                  "name_of_the_branch",
+                  "branch_code",
+                  "country_of_the_bank_receiving_the_payment",
+                  "swift_code",
+                  "other_code",
+                  "other_code_text"]
+        util.enable_controls(self.fields2controls(fields), False)
+    
+    # signal slots
     def on_language_selector_changed(self):
-        return
+        # Disable all other controls
+        self.disable_controls_below_contract_template_selector()
+        # Enable template selector
+        self.ui.contract_template_label.setEnabled(
+            self.ui.lang_selector.currentIndex() != -1)
+        self.ui.contract_template_selector.setEnabled(
+            self.ui.lang_selector.currentIndex() != -1)
+        # Add template names to the selector
+        if self.ui.contract_template_selector.isEnabled():
+            self.ui.contract_template_selector.clear()
+
+            template_dir = util.get_contract_template_dir(
+                self.ui.lang_selector.currentText())
+            QMessageBox.information(self, "Template Dir", template_dir)
+            for _, _, files in os.walk(template_dir):
+                for f in files:
+                    QMessageBox.information(self, "Template File", f)
+                    p = pathlib.Path(f)
+                    if p.suffix == ".template":
+                        self.ui.contract_template_selector.addItem(p.stem)
     
     def on_contract_template_selector_changed(self):
         return
