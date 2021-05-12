@@ -31,6 +31,7 @@ class MainWindow(QMainWindow):
     
     def field2control(self, field):
         return {
+            "contract_template": [self.ui.contract_template_label, self.ui.contract_template_selector],
             "start_date": [self.ui.start_date_label, self.ui.start_date_selector],
             "end_date": [self.ui.end_date_label, self.ui.end_date_selector],
             "party_a_name": [self.ui.party_a_name_label, self.ui.party_a_name_selector],
@@ -100,8 +101,8 @@ class MainWindow(QMainWindow):
         self.disable_controls_below_contract_template_selector()
         # Enable template selector
         enable = self.ui.lang_selector.currentIndex() != -1
-        self.ui.contract_template_label.setEnabled(enable)
-        self.ui.contract_template_selector.setEnabled(enable)
+        contract_template_controls = self.field2control("contract_template")
+        util.enable_controls(contract_template_controls, enable)
         # Add template names to the selector
         if self.ui.contract_template_selector.isEnabled():
             self.ui.contract_template_selector.clear()
