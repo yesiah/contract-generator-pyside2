@@ -11,6 +11,7 @@ from weasyprint import HTML as make_html
 import util
 from contract_generator_ui_model import Ui_MainWindow
 
+# TODO add swift code on changed slot
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -44,6 +45,16 @@ class MainWindow(QMainWindow):
     
     def is_cross_border_payment(self):
         return self.ui.cross_border_payment_group.isEnabled() and self.get_cross_border_payment() == "Yes"
+    
+    def get_markdown(self):
+        md = """# title
+
+            ## subtitle
+
+            text
+            - item1
+            - item2"""
+        return md
 
     """
     Json format, eval as dict
@@ -296,8 +307,19 @@ class MainWindow(QMainWindow):
         self.ui.execute_button.setEnabled(True)
 
     def on_execute(self):
-        return
+        md = self.get_markdown()
+        html = md2html(md)
+        # TODO decide where to store files
+        html_path = pathlib.Path(sys.executable).parent / "contract.html"
+        with open(html_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
+            f.write(html)
+            msg = "Saved html to " + str(html_path)
+            QMessageBox.information(self, "Info", msg)
 
+        pdf_path = html_path.with_suffix(".pdf")
+        make_html(string=html).write_pdf(pdf_path)
+        msg = "Saved pdf to " + str(pdf_path)
+        QMessageBox.information(self, "Info", msg)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
