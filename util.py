@@ -1,5 +1,6 @@
 
 import os
+from string import Formatter
 
 run_time_root = os.path.dirname(__file__)
 # contract_template_path = os.path.join(run_time_root, "templates/contract_templates/cht/中文契約範本.template")
@@ -25,9 +26,31 @@ def lang2code(name):
         u"\ud55c\uad6d\uc5b4": "kor"
     }.get(name, "cht")
 
+# path utils
 def get_contract_template_dir(lang):
     return os.path.join(run_time_root, "templates/contract_templates/", lang2code(lang))
 
+def get_party_a_template_dir(lang):
+    return os.path.join(run_time_root,"templates/party_a_template/", lang2code(lang))
+
+def get_payment_method_template_dir(lang):
+    return os.path.join(run_time_root, "templates/payment_method_templates/", lang2code(lang))
+
+# control utils
 def enable_controls(control_list, enable):
     for control in control_list:
         control.setEnabled(enable)
+
+# text file utils
+def read_utf8(path):
+    if os.path.exists(path):
+        with open(path, 'rb') as f:
+            return f.read().decode('UTF-8')
+
+def parse_fields(txt):
+    if txt:
+        return [fname for _, fname, _, _ in Formatter().parse(txt) if fname]
+
+def read_fields(path):
+    txt = read_utf8(path)
+    return parse_fields(txt)

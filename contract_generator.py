@@ -1,6 +1,7 @@
+import ast
 import os
-import sys
 import pathlib
+import sys
 
 from PySide2.QtWidgets import QApplication, QMainWindow
 from PySide2.QtWidgets import QMessageBox
@@ -9,6 +10,7 @@ from weasyprint import HTML as make_html
 
 import util
 from contract_generator_ui_model import Ui_MainWindow
+
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -22,13 +24,31 @@ class MainWindow(QMainWindow):
         # with open(contract_template_path, 'rb') as f:
         #     txt = f.read().decode('UTF-8')
         #     QMessageBox.information(self, "Info", txt)
-        
+
         # party_a_template_path = os.path.join(run_time_root, "templates/party_a_template/cht/cht-甲方.template")
         # QMessageBox.information(self, "Info", party_a_template_path)
         # with open(party_a_template_path, 'rb') as f:
         #     txt = f.read().decode('UTF-8')
         #     QMessageBox.information(self, "Info", txt)
-    
+
+    # getter ------------------------------------------------------------------
+    def get_contract_template_path(self):
+        return os.path.join(util.get_contract_template_dir(self.ui.lang_selector.currentText()), self.ui.contract_template_selector.currentText() + ".template")
+
+    """
+    Json format, eval as dict
+    """
+
+    def load_party_a_template(self):
+        template_dir = util.get_party_a_template_dir(self.ui.lang_selector.currentText())
+        for _, _, files in os.walk(template_dir):
+            for f in files:
+                if f.endswith(".template"):
+                    with open(os.path.join(template_dir, f), 'rb') as utf8_file:
+                        txt = utf8_file.read().decode('UTF-8')
+                        return ast.literal_eval(txt)
+
+    # internal utils ----------------------------------------------------------
     def field2control(self, field):
         return {
             "contract_template": [self.ui.contract_template_label, self.ui.contract_template_selector],
@@ -61,21 +81,21 @@ class MainWindow(QMainWindow):
                            self.ui.other_code_iban_code],
             "other_code_text": [self.ui.other_code_edit]
         }.get(field)
-    
+
     def fields2controls(self, fields):
         controls = []
         for field in fields:
             controls.extend(self.field2control(field))
 
         return controls
-    
+
     """
     Enable/Disable all controls related to field names
     """
+
     def enable_field_controls(self, fields, enable):
         util.enable_controls(self.fields2controls(fields), enable)
-    
-    # internal functions ------------------------------------------------------
+
     def enable_controls_below_contract_template_selector(self, enable):
         fields = ["start_date",
                   "end_date",
@@ -100,7 +120,7 @@ class MainWindow(QMainWindow):
                   "other_code",
                   "other_code_text"]
         self.enable_field_controls(fields, enable)
-    
+
     def refresh_contract_template_selector(self):
         if self.ui.contract_template_selector.isEnabled():
             self.ui.contract_template_selector.clear()
@@ -108,7 +128,21 @@ class MainWindow(QMainWindow):
             templates = [pathlib.Path(f).stem for f in os.listdir(template_dir) if f.endswith(".template")]
             self.ui.contract_template_selector.addItems(templates)
 
-    
+    def refresh_party_a_name_selector(self):
+        if self.ui.party_a_name_selector.isEnabled():
+            self.party_a_template = self.load_party_a_template()
+            if self.party_a_template:
+                self.ui.party_a_name_selector.clear()
+                self.ui.party_a_representative_selector.clear()
+                self.ui.party_a_name_selector.addItems(self.party_a_template.keys())
+
+    def refresh_payment_method_selector(self):
+        if self.ui.payment_method_selector.isEnabled():
+            self.ui.payment_method_selector.clear()
+            template_dir = util.get_payment_method_template_dir(self.ui.lang_selector.currentText())
+            templates = [pathlib.Path(f).stem for f in os.listdir(template_dir) if f.endswith(".template")]
+            self.ui.payment_method_selector.addItems(templates)
+
     # signal slots ------------------------------------------------------------
     def on_language_selector_changed(self):
         self.enable_controls_below_contract_template_selector(False)
@@ -118,27 +152,35 @@ class MainWindow(QMainWindow):
         enable = self.ui.lang_selector.currentIndex() != -1
         self.enable_field_controls(fields, enable)
         self.refresh_contract_template_selector()
-    
+
     def on_contract_template_selector_changed(self):
-        return
-    
+        self.enable_controls_below_contract_template_selector(False)
+        template_path = self.get_contract_template_path()
+        fields = util.read_fields(template_path)
+        if fields:
+            self.enable_field_controls(fields, True)
+
+        self.refresh_party_a_name_selector()
+        self.refresh_payment_method_selector()
+
     def on_party_a_name_selector_changed(self):
         return
-    
+
     def on_payment_method_selector_changed(self):
         return
-    
+
     def on_cross_border_payment_button_group_toggled(self, button, checked):
         return
-    
+
     def on_other_code_button_group_toggled(self, button, checked):
         return
-    
+
     def check_mandatory_fields(self):
         return
-    
+
     def on_execute(self):
         return
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -148,23 +190,23 @@ if __name__ == "__main__":
 
 # ----------------------------------------------------------------------------
 
-    md = """# title
+    # md = """# title
 
-         ## subtitle
+    #      ## subtitle
 
-         text
-         - item1
-         - item2"""
-    
-    html = md2html(md)
-    html_path = pathlib.Path(sys.executable).parent / "sandbox2.html"
-    print(html_path)
-    with open(html_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
-        f.write(html)
-    
-    pdf_path = html_path.with_suffix(".pdf")
-    print(pdf_path)
-    make_html(string=html).write_pdf(pdf_path)
+    #      text
+    #      - item1
+    #      - item2"""
+
+    # html = md2html(md)
+    # html_path = pathlib.Path(sys.executable).parent / "sandbox2.html"
+    # print(html_path)
+    # with open(html_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
+    #     f.write(html)
+
+    # pdf_path = html_path.with_suffix(".pdf")
+    # print(pdf_path)
+    # make_html(string=html).write_pdf(pdf_path)
 
 # ----------------------------------------------------------------------------
 
