@@ -95,6 +95,14 @@ class MainWindow(QMainWindow):
                   "other_code_text"]
         util.enable_controls(self.fields2controls(fields), enable)
     
+    def refresh_contract_template_selector(self):
+        if self.ui.contract_template_selector.isEnabled():
+            self.ui.contract_template_selector.clear()
+            template_dir = util.get_contract_template_dir(self.ui.lang_selector.currentText())
+            templates = [pathlib.Path(f).stem for f in os.listdir(template_dir) if f.endswith(".template")]
+            self.ui.contract_template_selector.addItems(templates)
+
+    
     # signal slots ------------------------------------------------------------
     def on_language_selector_changed(self):
         # Disable all other controls
@@ -103,12 +111,7 @@ class MainWindow(QMainWindow):
         enable = self.ui.lang_selector.currentIndex() != -1
         contract_template_controls = self.field2control("contract_template")
         util.enable_controls(contract_template_controls, enable)
-        # Add template names to the selector
-        if self.ui.contract_template_selector.isEnabled():
-            self.ui.contract_template_selector.clear()
-            template_dir = util.get_contract_template_dir(self.ui.lang_selector.currentText())
-            templates = [pathlib.Path(f).stem for f in os.listdir(template_dir) if f.endswith(".template")]
-            self.ui.contract_template_selector.addItems(templates)
+        self.refresh_contract_template_selector()
     
     def on_contract_template_selector_changed(self):
         return
