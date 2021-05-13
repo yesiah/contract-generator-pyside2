@@ -69,6 +69,12 @@ class MainWindow(QMainWindow):
 
         return controls
     
+    """
+    Enable/Disable all controls related to field names
+    """
+    def enable_field_controls(self, fields, enable):
+        util.enable_controls(self.fields2controls(fields), enable)
+    
     # internal functions ------------------------------------------------------
     def enable_controls_below_contract_template_selector(self, enable):
         fields = ["start_date",
@@ -93,7 +99,7 @@ class MainWindow(QMainWindow):
                   "swift_code",
                   "other_code",
                   "other_code_text"]
-        util.enable_controls(self.fields2controls(fields), enable)
+        self.enable_field_controls(fields, enable)
     
     def refresh_contract_template_selector(self):
         if self.ui.contract_template_selector.isEnabled():
@@ -105,12 +111,12 @@ class MainWindow(QMainWindow):
     
     # signal slots ------------------------------------------------------------
     def on_language_selector_changed(self):
-        # Disable all other controls
         self.enable_controls_below_contract_template_selector(False)
+
         # Enable template selector
+        fields = ["contract_template"]
         enable = self.ui.lang_selector.currentIndex() != -1
-        contract_template_controls = self.field2control("contract_template")
-        util.enable_controls(contract_template_controls, enable)
+        self.enable_field_controls(fields, enable)
         self.refresh_contract_template_selector()
     
     def on_contract_template_selector_changed(self):
