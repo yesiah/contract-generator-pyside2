@@ -3,4 +3,4 @@ Another contract generator built on PySide2
 
 Build:
 
-`[PYTHONOPTIMIZE=1] pyinstaller --onefile --windowed --clean contract_generator.spec`
+`PYTHONOPTIMIZE=1 pyinstaller --clean --noconfirm contract_generator_app.spec`
