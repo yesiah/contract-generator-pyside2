@@ -37,8 +37,9 @@ class MainWindow(QMainWindow):
 
     """
     Json format, eval as dict
-    """
 
+    Party A template stores all possible Party A names
+    """
     def load_party_a_template(self):
         template_dir = util.get_party_a_template_dir(self.ui.lang_selector.currentText())
         for _, _, files in os.walk(template_dir):
@@ -164,7 +165,11 @@ class MainWindow(QMainWindow):
         self.refresh_payment_method_selector()
 
     def on_party_a_name_selector_changed(self):
-        return
+        if self.party_a_template:
+            self.enable_field_controls(["party_a_representative"], True)
+            self.ui.party_a_representative_selector.clear()
+            party_a_representatives = self.party_a_template[self.ui.party_a_name_selector.currentText()]
+            self.ui.party_a_representative_selector.addItems(party_a_representatives)
 
     def on_payment_method_selector_changed(self):
         return
