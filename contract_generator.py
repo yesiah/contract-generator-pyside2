@@ -34,6 +34,16 @@ class MainWindow(QMainWindow):
     # getter ------------------------------------------------------------------
     def get_contract_template_path(self):
         return os.path.join(util.get_contract_template_dir(self.ui.lang_selector.currentText()), self.ui.contract_template_selector.currentText() + ".template")
+    
+    def get_payment_method_template_path(self):
+        return os.path.join(util.get_payment_method_template_dir(self.ui.lang_selector.currentText()), self.ui.payment_method_selector.currentText() + ".template")
+    
+    def get_cross_border_payment(self):
+        if self.ui.cross_border_payment_group.isEnabled():
+            return self.ui.cross_border_payment_button_group.checkedButton().text()
+    
+    def is_cross_border_payment(self):
+        return self.ui.cross_border_payment_group.isEnabled() and self.get_cross_border_payment() == "Yes"
 
     """
     Json format, eval as dict
@@ -121,6 +131,21 @@ class MainWindow(QMainWindow):
                   "other_code",
                   "other_code_text"]
         self.enable_field_controls(fields, enable)
+    
+    def enable_controls_below_payment_method_selector(self, enable):
+        fields = ["currency",
+                  "cross_border_payment",
+                  "bank_account",
+                  "account_name",
+                  "name_of_the_bank",
+                  "bank_code",
+                  "name_of_the_branch",
+                  "branch_code",
+                  "country_of_the_bank_receiving_the_payment",
+                  "swift_code",
+                  "other_code",
+                  "other_code_text"]
+        self.enable_field_controls(fields, enable)
 
     def refresh_contract_template_selector(self):
         if self.ui.contract_template_selector.isEnabled():
@@ -172,16 +197,103 @@ class MainWindow(QMainWindow):
             self.ui.party_a_representative_selector.addItems(party_a_representatives)
 
     def on_payment_method_selector_changed(self):
-        return
+        self.enable_controls_below_payment_method_selector(False)
+        template_path = self.get_payment_method_template_path()
+        fields = util.read_fields(template_path)
+        self.enable_field_controls(fields, True)
 
     def on_cross_border_payment_button_group_toggled(self, button, checked):
-        return
+        self.check_mandatory_fields()
 
     def on_other_code_button_group_toggled(self, button, checked):
-        return
+        self.check_mandatory_fields()
 
     def check_mandatory_fields(self):
-        return
+        print("check")
+        self.ui.execute_button.setEnabled(False)
+        if self.ui.lang_selector.currentIndex() == -1 or self.ui.contract_template_selector.currentIndex() == -1:
+            print("lang wrong")
+            return
+
+        if self.ui.start_date_selector.isEnabled() and self.ui.end_date_selector.isEnabled() and (self.ui.end_date_selector.date() < self.ui.start_date_selector.data()):
+            print("start date wrong")
+            return
+
+        if self.ui.party_a_name_selector.isEnabled() and self.ui.party_a_name_selector.currentIndex() == -1:
+            print("party a name wrong")
+            return
+
+        if self.ui.party_a_representative_selector.isEnabled() and self.ui.party_a_representative_selector.currentIndex() == -1:
+            print("party a repre wrong")
+            return
+
+        if self.ui.party_a_registered_address_edit.isEnabled() and self.ui.party_a_registered_address_edit.text() == "":
+            print("party a address wrong")
+            return
+
+        if self.ui.party_b_name_edit.isEnabled() and self.ui.party_b_name_edit.text() == "":
+            print("party b name wrong")
+            return
+
+        if self.ui.party_b_representative_edit.isEnabled() and self.ui.party_b_representative_edit.text() == "":
+            print("party b repre wrong")
+            return
+
+        if self.ui.party_b_registered_address_edit.isEnabled() and self.ui.party_b_registered_address_edit.text() == "":
+            print("party b addres wrong")
+            return
+
+        if self.ui.payment_method_selector.isEnabled() and self.ui.payment_method_selector.currentIndex() == -1:
+            print("payment wrong")
+            return
+
+        if self.ui.currency_selector.isEnabled() and self.ui.currency_selector.currentIndex() == -1:
+            print("currency wrong")
+            return
+
+        if self.ui.cross_border_payment_group.isEnabled():
+            if self.ui.cross_border_payment_button_group.checkedId() == -1:
+                print("cross boader wrong")
+                return
+
+        if self.ui.bank_account_edit.isEnabled() and self.ui.bank_account_edit.text() == "":
+            print("bank account wrong")
+            return
+
+        if self.ui.account_name_edit.isEnabled() and self.ui.account_name_edit.text() == "":
+            print("account name wrong")
+            return
+
+        if self.ui.name_of_the_bank_edit.isEnabled() and self.ui.name_of_the_bank_edit.text() == "":
+            print("bank name wrong")
+            return
+
+        if self.ui.bank_code_edit.isEnabled() and self.ui.bank_code_edit.text() == "":
+            print("bank code wrong")
+            return
+
+        if self.ui.name_of_the_branch_edit.isEnabled() and self.ui.name_of_the_branch_edit.text() == "":
+            print("branch name wrong")
+            return
+
+        if self.ui.branch_code_edit.isEnabled() and self.ui.branch_code_edit.text() == "":
+            print("branch code wrong")
+            return
+
+        if self.ui.country_of_the_bank_receiving_the_payment_edit.isEnabled() and self.ui.country_of_the_bank_receiving_the_payment_edit.text() == "":
+            print("country")
+            return
+
+        if self.is_cross_border_payment():
+            if self.ui.swift_code_edit.text() == "":
+                print("swift code empty")
+                return
+
+            if self.ui.other_code_button_group.checkedId() != -1 and self.ui.other_code_edit.text() == "":
+                print("other code empty")
+                return
+
+        self.ui.execute_button.setEnabled(True)
 
     def on_execute(self):
         return
