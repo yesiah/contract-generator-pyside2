@@ -1,14 +1,14 @@
 import os
 import sys
 import pathlib
+
 from PySide2.QtWidgets import QApplication, QMainWindow
 from PySide2.QtWidgets import QMessageBox
+from markdown import markdown as md2html
+from weasyprint import HTML as make_html
 
-import markdown
-from weasyprint import HTML
-
-from contract_generator_ui_model import Ui_MainWindow
 import util
+from contract_generator_ui_model import Ui_MainWindow
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -69,8 +69,8 @@ class MainWindow(QMainWindow):
 
         return controls
     
-    # internal functions
-    def disable_controls_below_contract_template_selector(self):
+    # internal functions ------------------------------------------------------
+    def enable_controls_below_contract_template_selector(self, enable):
         fields = ["start_date",
                   "end_date",
                   "party_a_name",
@@ -93,12 +93,12 @@ class MainWindow(QMainWindow):
                   "swift_code",
                   "other_code",
                   "other_code_text"]
-        util.enable_controls(self.fields2controls(fields), False)
+        util.enable_controls(self.fields2controls(fields), enable)
     
-    # signal slots
+    # signal slots ------------------------------------------------------------
     def on_language_selector_changed(self):
         # Disable all other controls
-        self.disable_controls_below_contract_template_selector()
+        self.enable_controls_below_contract_template_selector(False)
         # Enable template selector
         enable = self.ui.lang_selector.currentIndex() != -1
         contract_template_controls = self.field2control("contract_template")
@@ -147,7 +147,7 @@ if __name__ == "__main__":
          - item1
          - item2"""
     
-    html = markdown.markdown(md)
+    html = md2html(md)
     html_path = pathlib.Path(sys.executable).parent / "sandbox2.html"
     print(html_path)
     with open(html_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
@@ -155,7 +155,7 @@ if __name__ == "__main__":
     
     pdf_path = html_path.with_suffix(".pdf")
     print(pdf_path)
-    HTML(string=html).write_pdf(pdf_path)
+    make_html(string=html).write_pdf(pdf_path)
 
 # ----------------------------------------------------------------------------
 
