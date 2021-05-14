@@ -46,7 +46,142 @@ class MainWindow(QMainWindow):
     def is_cross_border_payment(self):
         return self.ui.cross_border_payment_group.isEnabled() and self.get_cross_border_payment() == "Yes"
     
+    def read_contract_template(self):
+        template_path = self.get_contract_template_path()
+        return util.read_utf8(template_path)
+
+    def read_payment_method_template(self):
+        template_path = self.get_payment_method_template_path()
+        return util.read_utf8(template_path)
+    
+    def get_start_date_str(self):
+        return util.to_date_str(self.ui.lang_selector.currentText(), self.ui.start_date_selector.date())
+
+    def get_end_date_str(self):
+        return util.to_date_str(self.ui.lang_selector.currentText(), self.ui.end_date_selector.date())
+
+    def get_party_a_name(self):
+        return self.ui.party_a_name_selector.currentText()
+
+    def get_party_a_representative(self):
+        return self.ui.party_a_representative_selector.currentText()
+
+    def get_party_a_registered_address(self):
+        return self.ui.party_a_registered_address_edit.text()
+
+    def get_party_a_contact_address(self):
+        return self.ui.party_a_contact_address_edit.text()
+
+    def get_party_b_name(self):
+        return self.ui.party_b_name_edit.text()
+
+    def get_party_b_representative(self):
+        return self.ui.party_b_representative_edit.text()
+
+    def get_party_b_registered_address(self):
+        return self.ui.party_b_registered_address_edit.text()
+
+    def get_party_b_contact_address(self):
+        return self.ui.party_b_contact_address_edit.text()
+
+    def get_signature_date(self):
+        return util.to_date_str(self.ui.lang_selector.currentText(), self.ui.signature_date_selector.date())
+
+    def get_payment_method(self):
+        return self.get_payment_method_markdown()
+
+    def get_currency(self):
+        return self.ui.currency_selector.currentText()
+
+    def get_cross_border_payment(self):
+        if self.ui.cross_border_payment_group.isEnabled():
+            return self.ui.cross_border_payment_button_group.checkedButton().text()
+
+    def get_bank_account(self):
+        return self.ui.bank_account_edit.text()
+
+    def get_account_name(self):
+        return self.ui.account_name_edit.text()
+
+    def get_name_of_the_bank(self):
+        return self.ui.name_of_the_bank_edit.text()
+
+    def get_bank_code(self):
+        return self.ui.bank_code_edit.text()
+
+    def get_name_of_the_branch(self):
+        return self.ui.name_of_the_branch_edit.text()
+
+    def get_branch_code(self):
+        return self.ui.branch_code_edit.text()
+
+    def get_country_of_the_bank_receiving_the_payment(self):
+        return self.ui.country_of_the_bank_receiving_the_payment_edit.text()
+
+    def get_swift_code(self):
+        return self.ui.swift_code_edit.text()
+
+    def get_other_code(self):
+        if self.ui.other_code_group.isEnabled():
+            return self.ui.other_code_button_group.checkedButton().text()
+
+    def get_other_code_edit(self):
+        if self.ui.other_code_edit.isEnabled():
+            return self.ui.other_code_edit.text()
+    
+    def get_field_value(self, field):
+        return {
+            "start_date": self.get_start_date_str(),
+            "end_date": self.get_end_date_str(),
+            "party_a_name": self.get_party_a_name(),
+            "party_a_representative": self.get_party_a_representative(),
+            "party_a_registered_address": self.get_party_a_registered_address(),
+            "party_a_contact_address": self.get_party_a_contact_address(),
+            "party_b_name": self.get_party_b_name(),
+            "party_b_representative": self.get_party_b_representative(),
+            "party_b_registered_address": self.get_party_b_registered_address(),
+            "party_b_contact_address": self.get_party_b_contact_address(),
+            "signature_date": self.get_signature_date(),
+            "payment_method": self.get_payment_method()
+        }.get(field, None)
+    
+    def get_field_values(self, fields):
+        return list(map(self.get_field_value, fields))
+
+    def get_payment_method_field_value(self, field):
+        return {
+            "currency": self.get_currency(),
+            "cross_border_payment": self.get_cross_border_payment(),
+            "bank_account": self.get_bank_account(),
+            "account_name": self.get_account_name(),
+            "name_of_the_bank": self.get_name_of_the_bank(),
+            "bank_code": self.get_bank_code(),
+            "name_of_the_branch": self.get_name_of_the_branch(),
+            "branch_code": self.get_branch_code(),
+            "country_of_the_bank_receiving_the_payment": self.get_country_of_the_bank_receiving_the_payment(),
+            "swift_code": self.get_swift_code(),
+            "other_code": self.get_other_code(),
+            "other_code_text": self.get_other_code_edit()
+        }.get(field, None)
+
+    def get_payment_method_field_values(self, fields):
+        return list(map(self.get_payment_method_field_value, fields))
+
+    def get_payment_method_markdown(self):
+        if self.ui.payment_method_selector.isEnabled():
+            template_txt = self.read_payment_method_template()
+            fields = util.parse_fields(template_txt)
+            values = self.get_payment_method_field_values(fields)
+            d = dict(zip(fields, values))
+            return template_txt.format(**d)
+    
     def get_markdown(self):
+        template = self.read_contract_template()
+        field_names = util.parse_fields(template)
+        field_values = self.get_field_values(field_names)
+        d = dict(zip(field_names, field_values))
+        return template.format(**d)
+
         md = """# title
 
             ## subtitle
@@ -214,9 +349,11 @@ class MainWindow(QMainWindow):
         self.enable_field_controls(fields, True)
 
     def on_cross_border_payment_button_group_toggled(self, button, checked):
+        # TODO enable/disable swift code and other code (text)
         self.check_mandatory_fields()
 
     def on_other_code_button_group_toggled(self, button, checked):
+        # TODO enable/disable swift code and other code text
         self.check_mandatory_fields()
 
     def check_mandatory_fields(self):

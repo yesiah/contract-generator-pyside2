@@ -2,6 +2,8 @@
 import os
 from string import Formatter
 
+from PySide2.QtCore import QLocale
+
 run_time_root = os.path.dirname(__file__)
 # contract_template_path = os.path.join(run_time_root, "templates/contract_templates/cht/中文契約範本.template")
 # QMessageBox.information(self, "Info", contract_template_path)
@@ -54,3 +56,53 @@ def parse_fields(txt):
 def read_fields(path):
     txt = read_utf8(path)
     return parse_fields(txt)
+
+# date
+def zh_tw_date_format():
+    return "yyyy 年 MM 月 dd 日"
+
+def en_us_date_format():
+    return "MMMM dd, yyyy"
+
+def ja_jp_date_format():
+    return "yyyy 年 MM 月 dd 日"
+
+def ko_kr_date_format():
+    return "yyyy 년 MM 월 dd 일"
+
+def select_date_format(x):
+    return {
+        "繁體中文": zh_tw_date_format(),
+        "English": en_us_date_format(),
+        "日本語": ja_jp_date_format(),
+        "한국어": ko_kr_date_format()
+    }.get(x, en_us_date_format())
+
+# locale
+def zh_tw_locale():
+    return QLocale(QLocale.Chinese, QLocale.TraditionalChineseScript, QLocale.Taiwan)
+
+def en_us_locale():
+    return QLocale(QLocale.English, QLocale.UnitedStates)
+
+def ja_jp_locale():
+    return QLocale(QLocale.Japanese, QLocale.Japan)
+
+def ko_kr_locale():
+    return QLocale(QLocale.Korean, QLocale.SouthKorea)
+
+def select_locale(x):
+    return {
+        "繁體中文": zh_tw_locale(),
+        "English": en_us_locale(),
+        "日本語": ja_jp_locale(),
+        "한국어": ko_kr_locale()
+    }.get(x, en_us_locale())
+
+# locale and date util
+def select_locale_and_date_format(x):
+    return (select_locale(x), select_date_format(x))
+
+def to_date_str(lang, qdate):
+    curr_locale, date_fmt = select_locale_and_date_format(lang)
+    return curr_locale.toString(qdate, date_fmt)
