@@ -14,7 +14,7 @@
    <string>Contract Generator</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="execute_button">
+   <widget class="QPushButton" name="generate_button">
     <property name="enabled">
      <bool>false</bool>
     </property>
@@ -27,7 +27,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Execute</string>
+     <string>Generate</string>
     </property>
    </widget>
    <widget class="QScrollArea" name="scrollArea">
@@ -525,48 +525,7 @@
       </item>
       <item>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="2">
-         <widget class="QComboBox" name="currency_selector">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="currentIndex">
-           <number>-1</number>
-          </property>
-          <property name="placeholderText">
-           <string>--- Currency ---</string>
-          </property>
-          <item>
-           <property name="text">
-            <string>NTD</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>USD</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>JPY</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLabel" name="currency_label">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Currency</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="7">
+        <item row="0" column="11">
          <spacer name="horizontalSpacer_8">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -579,105 +538,7 @@
           </property>
          </spacer>
         </item>
-        <item row="0" column="5">
-         <spacer name="horizontalSpacer_5">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="0">
-         <spacer name="horizontalSpacer_6">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="4">
-         <spacer name="horizontalSpacer_3">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="6">
-         <spacer name="horizontalSpacer_7">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="payment_method_label">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>Payment Method</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="8">
-         <spacer name="horizontalSpacer_9">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="0" column="2">
-         <widget class="QComboBox" name="payment_method_selector">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="placeholderText">
-           <string>--- Payment Method ---</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="3">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="3">
+        <item row="1" column="5">
          <widget class="QGroupBox" name="cross_border_payment_group">
           <property name="enabled">
            <bool>false</bool>
@@ -724,6 +585,184 @@
            </layout>
           </widget>
          </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QLabel" name="currency_label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Currency</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <spacer name="horizontalSpacer_6">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="5">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="4">
+         <widget class="QComboBox" name="payment_method_selector">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>--- Payment Method ---</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="8">
+         <spacer name="horizontalSpacer_11">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="6">
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="12">
+         <spacer name="horizontalSpacer_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="2">
+         <spacer name="horizontalSpacer_10">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="10">
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="3">
+         <widget class="QLabel" name="payment_method_label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>Payment Method</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="4">
+         <widget class="QComboBox" name="currency_selector">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="currentIndex">
+           <number>-1</number>
+          </property>
+          <property name="placeholderText">
+           <string>--- Currency ---</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>NTD</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>USD</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>JPY</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="0" column="9">
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="7">
+         <spacer name="horizontalSpacer_12">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
        </layout>
       </item>
@@ -1379,10 +1418,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>execute_button</sender>
+   <sender>generate_button</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>on_execute()</slot>
+   <slot>on_generate()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>333</x>
@@ -1465,9 +1504,9 @@
   <slot>on_payment_method_selector_changed()</slot>
   <slot>check_mandatory_fields()</slot>
   <slot>on_party_a_name_selector_changed()</slot>
-  <slot>on_execute()</slot>
   <slot>on_cross_border_payment_button_group_toggled(QAbstractButton*,bool)</slot>
   <slot>on_other_code_button_group_toggled(QAbstractButton*,bool)</slot>
+  <slot>on_generate()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="cross_border_payment_button_group"/>

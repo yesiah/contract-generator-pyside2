@@ -350,7 +350,7 @@ class MainWindow(QMainWindow):
 
     def check_mandatory_fields(self):
         print("check")
-        self.ui.execute_button.setEnabled(False)
+        self.ui.generate_button.setEnabled(False)
         if self.ui.lang_selector.currentIndex() == -1 or self.ui.contract_template_selector.currentIndex() == -1:
             print("lang wrong")
             return
@@ -433,9 +433,9 @@ class MainWindow(QMainWindow):
                 print("other code empty")
                 return
 
-        self.ui.execute_button.setEnabled(True)
+        self.ui.generate_button.setEnabled(True)
 
-    def on_execute(self):
+    def on_generate(self):
         md = self.get_markdown()
         html = markdown(md)
         # TODO decide where to store files

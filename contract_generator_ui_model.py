@@ -20,10 +20,10 @@ class Ui_MainWindow(object):
         MainWindow.resize(793, 682)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.execute_button = QPushButton(self.centralwidget)
-        self.execute_button.setObjectName(u"execute_button")
-        self.execute_button.setEnabled(False)
-        self.execute_button.setGeometry(QRect(300, 600, 171, 41))
+        self.generate_button = QPushButton(self.centralwidget)
+        self.generate_button.setObjectName(u"generate_button")
+        self.generate_button.setEnabled(False)
+        self.generate_button.setGeometry(QRect(300, 600, 171, 41))
         self.scrollArea = QScrollArea(self.centralwidget)
         self.scrollArea.setObjectName(u"scrollArea")
         self.scrollArea.setGeometry(QRect(10, 10, 771, 581))
@@ -265,61 +265,9 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2 = QGridLayout()
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.currency_selector = QComboBox(self.scrollAreaWidgetContents)
-        self.currency_selector.addItem("")
-        self.currency_selector.addItem("")
-        self.currency_selector.addItem("")
-        self.currency_selector.setObjectName(u"currency_selector")
-        self.currency_selector.setEnabled(False)
-
-        self.gridLayout_2.addWidget(self.currency_selector, 1, 2, 1, 1)
-
-        self.currency_label = QLabel(self.scrollAreaWidgetContents)
-        self.currency_label.setObjectName(u"currency_label")
-        self.currency_label.setEnabled(False)
-        self.currency_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
-
-        self.gridLayout_2.addWidget(self.currency_label, 1, 1, 1, 1)
-
         self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
-        self.gridLayout_2.addItem(self.horizontalSpacer_8, 0, 7, 1, 1)
-
-        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_2.addItem(self.horizontalSpacer_5, 0, 5, 1, 1)
-
-        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_2.addItem(self.horizontalSpacer_6, 0, 0, 1, 1)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_2.addItem(self.horizontalSpacer_3, 0, 4, 1, 1)
-
-        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_2.addItem(self.horizontalSpacer_7, 0, 6, 1, 1)
-
-        self.payment_method_label = QLabel(self.scrollAreaWidgetContents)
-        self.payment_method_label.setObjectName(u"payment_method_label")
-        self.payment_method_label.setEnabled(False)
-
-        self.gridLayout_2.addWidget(self.payment_method_label, 0, 1, 1, 1)
-
-        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_2.addItem(self.horizontalSpacer_9, 0, 8, 1, 1)
-
-        self.payment_method_selector = QComboBox(self.scrollAreaWidgetContents)
-        self.payment_method_selector.setObjectName(u"payment_method_selector")
-        self.payment_method_selector.setEnabled(False)
-
-        self.gridLayout_2.addWidget(self.payment_method_selector, 0, 2, 1, 1)
-
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.gridLayout_2.addItem(self.horizontalSpacer, 0, 3, 1, 1)
+        self.gridLayout_2.addItem(self.horizontalSpacer_8, 0, 11, 1, 1)
 
         self.cross_border_payment_group = QGroupBox(self.scrollAreaWidgetContents)
         self.cross_border_payment_group.setObjectName(u"cross_border_payment_group")
@@ -346,7 +294,71 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.cross_border_payment_no)
 
 
-        self.gridLayout_2.addWidget(self.cross_border_payment_group, 1, 3, 1, 1)
+        self.gridLayout_2.addWidget(self.cross_border_payment_group, 1, 5, 1, 1)
+
+        self.currency_label = QLabel(self.scrollAreaWidgetContents)
+        self.currency_label.setObjectName(u"currency_label")
+        self.currency_label.setEnabled(False)
+        self.currency_label.setAlignment(Qt.AlignRight|Qt.AlignTrailing|Qt.AlignVCenter)
+
+        self.gridLayout_2.addWidget(self.currency_label, 1, 3, 1, 1)
+
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer_6, 0, 1, 1, 1)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer, 0, 5, 1, 1)
+
+        self.payment_method_selector = QComboBox(self.scrollAreaWidgetContents)
+        self.payment_method_selector.setObjectName(u"payment_method_selector")
+        self.payment_method_selector.setEnabled(False)
+
+        self.gridLayout_2.addWidget(self.payment_method_selector, 0, 4, 1, 1)
+
+        self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer_11, 0, 8, 1, 1)
+
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer_3, 0, 6, 1, 1)
+
+        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer_9, 0, 12, 1, 1)
+
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer_10, 0, 2, 1, 1)
+
+        self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer_7, 0, 10, 1, 1)
+
+        self.payment_method_label = QLabel(self.scrollAreaWidgetContents)
+        self.payment_method_label.setObjectName(u"payment_method_label")
+        self.payment_method_label.setEnabled(False)
+
+        self.gridLayout_2.addWidget(self.payment_method_label, 0, 3, 1, 1)
+
+        self.currency_selector = QComboBox(self.scrollAreaWidgetContents)
+        self.currency_selector.addItem("")
+        self.currency_selector.addItem("")
+        self.currency_selector.addItem("")
+        self.currency_selector.setObjectName(u"currency_selector")
+        self.currency_selector.setEnabled(False)
+
+        self.gridLayout_2.addWidget(self.currency_selector, 1, 4, 1, 1)
+
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer_5, 0, 9, 1, 1)
+
+        self.horizontalSpacer_12 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.gridLayout_2.addItem(self.horizontalSpacer_12, 0, 7, 1, 1)
 
 
         self.verticalLayout.addLayout(self.gridLayout_2)
@@ -544,7 +556,7 @@ class Ui_MainWindow(object):
         self.branch_code_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
         self.country_of_the_bank_receiving_the_payment_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
         self.party_a_name_selector.currentTextChanged.connect(MainWindow.on_party_a_name_selector_changed)
-        self.execute_button.clicked.connect(MainWindow.on_execute)
+        self.generate_button.clicked.connect(MainWindow.on_generate)
         self.cross_border_payment_button_group.buttonToggled.connect(MainWindow.on_cross_border_payment_button_group_toggled)
         self.other_code_button_group.buttonToggled.connect(MainWindow.on_other_code_button_group_toggled)
         self.other_code_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
@@ -559,7 +571,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Contract Generator", None))
-        self.execute_button.setText(QCoreApplication.translate("MainWindow", u"Execute", None))
+        self.generate_button.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
         self.party_b_name_label.setText(QCoreApplication.translate("MainWindow", u"Party B Name", None))
         self.party_a_registered_address_label.setText(QCoreApplication.translate("MainWindow", u"Party A Registered Address", None))
         self.party_b_registered_address_label.setText(QCoreApplication.translate("MainWindow", u"Party B Registered Address", None))
@@ -586,17 +598,17 @@ class Ui_MainWindow(object):
         self.start_date_label.setText(QCoreApplication.translate("MainWindow", u"Start Date", None))
         self.party_b_contact_address_label.setText(QCoreApplication.translate("MainWindow", u"Party B Contact Address", None))
         self.party_b_contact_address_edit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"  (optional)", None))
+        self.cross_border_payment_group.setTitle(QCoreApplication.translate("MainWindow", u"Cross Border Payment", None))
+        self.cross_border_payment_yes.setText(QCoreApplication.translate("MainWindow", u"Yes", None))
+        self.cross_border_payment_no.setText(QCoreApplication.translate("MainWindow", u"No", None))
+        self.currency_label.setText(QCoreApplication.translate("MainWindow", u"Currency", None))
+        self.payment_method_selector.setPlaceholderText(QCoreApplication.translate("MainWindow", u"--- Payment Method ---", None))
+        self.payment_method_label.setText(QCoreApplication.translate("MainWindow", u"Payment Method", None))
         self.currency_selector.setItemText(0, QCoreApplication.translate("MainWindow", u"NTD", None))
         self.currency_selector.setItemText(1, QCoreApplication.translate("MainWindow", u"USD", None))
         self.currency_selector.setItemText(2, QCoreApplication.translate("MainWindow", u"JPY", None))
 
         self.currency_selector.setPlaceholderText(QCoreApplication.translate("MainWindow", u"--- Currency ---", None))
-        self.currency_label.setText(QCoreApplication.translate("MainWindow", u"Currency", None))
-        self.payment_method_label.setText(QCoreApplication.translate("MainWindow", u"Payment Method", None))
-        self.payment_method_selector.setPlaceholderText(QCoreApplication.translate("MainWindow", u"--- Payment Method ---", None))
-        self.cross_border_payment_group.setTitle(QCoreApplication.translate("MainWindow", u"Cross Border Payment", None))
-        self.cross_border_payment_yes.setText(QCoreApplication.translate("MainWindow", u"Yes", None))
-        self.cross_border_payment_no.setText(QCoreApplication.translate("MainWindow", u"No", None))
         self.bank_account_edit.setPlaceholderText("")
         self.account_name_label.setText(QCoreApplication.translate("MainWindow", u"Account Name", None))
         self.bank_code_edit.setPlaceholderText("")
