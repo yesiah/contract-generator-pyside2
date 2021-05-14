@@ -7,7 +7,8 @@ from PySide2.QtCore import QFile
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PySide2.QtWidgets import QMessageBox
 from markdown import markdown
-from weasyprint import HTML
+from weasyprint import HTML, CSS
+from weasyprint.fonts import FontConfiguration
 
 import util
 from contract_generator_ui_model import Ui_MainWindow
@@ -446,7 +447,15 @@ class MainWindow(QMainWindow):
             msg = "Saved html to " + str(html_path)
             QMessageBox.information(self, "Info", msg)
 
-        HTML(string=html).write_pdf(pdf_path)
+        font_config = FontConfiguration()
+        html = HTML(string=html)
+        css = CSS(string='''
+                  @font-face {
+                      font-family: Helvetica;
+                      src: url(file:///System/Library/Fonts/Helvetica.ttc);
+                  }
+                  p {font-family: Helvetica}''', font_config=font_config)
+        html.write_pdf(pdf_path, stylesheets=[css], font_config=font_config)
         msg = "Saved pdf to " + str(pdf_path)
         QMessageBox.information(self, "Info", msg)
 
