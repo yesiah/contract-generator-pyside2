@@ -11,8 +11,6 @@ from weasyprint import HTML as make_html
 import util
 from contract_generator_ui_model import Ui_MainWindow
 
-# TODO add swift code on changed slot
-
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -182,15 +180,6 @@ class MainWindow(QMainWindow):
         d = dict(zip(field_names, field_values))
         return template.format(**d)
 
-        md = """# title
-
-            ## subtitle
-
-            text
-            - item1
-            - item2"""
-        return md
-
     """
     Json format, eval as dict
 
@@ -348,8 +337,12 @@ class MainWindow(QMainWindow):
         fields = util.read_fields(template_path)
         self.enable_field_controls(fields, True)
 
+        # swift code and other code depend on cross border payment, not payment method
+        self.enable_field_controls(["swift_code", "other_code", "other_code_text"], False)
+
     def on_cross_border_payment_button_group_toggled(self, button, checked):
-        # TODO enable/disable swift code and other code (text)
+        fields = ["swift_code", "other_code", "other_code_text"]
+        self.enable_field_controls(fields, self.is_cross_border_payment())
         self.check_mandatory_fields()
 
     def on_other_code_button_group_toggled(self, button, checked):
@@ -463,27 +456,5 @@ if __name__ == "__main__":
 
     window = MainWindow()
     window.show()
-
-# ----------------------------------------------------------------------------
-
-    # md = """# title
-
-    #      ## subtitle
-
-    #      text
-    #      - item1
-    #      - item2"""
-
-    # html = md2html(md)
-    # html_path = pathlib.Path(sys.executable).parent / "sandbox2.html"
-    # print(html_path)
-    # with open(html_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
-    #     f.write(html)
-
-    # pdf_path = html_path.with_suffix(".pdf")
-    # print(pdf_path)
-    # make_html(string=html).write_pdf(pdf_path)
-
-# ----------------------------------------------------------------------------
 
     sys.exit(app.exec_())

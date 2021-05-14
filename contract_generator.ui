@@ -864,9 +864,6 @@
           <property name="enabled">
            <bool>false</bool>
           </property>
-          <property name="placeholderText">
-           <string>  (optional)</string>
-          </property>
          </widget>
         </item>
         <item row="3" column="0">
@@ -893,9 +890,6 @@
          <widget class="QLineEdit" name="other_code_edit">
           <property name="enabled">
            <bool>false</bool>
-          </property>
-          <property name="placeholderText">
-           <string>  (optional)</string>
           </property>
          </widget>
         </item>
