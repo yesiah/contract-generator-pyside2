@@ -548,6 +548,7 @@ class Ui_MainWindow(object):
         self.cross_border_payment_button_group.buttonToggled.connect(MainWindow.on_cross_border_payment_button_group_toggled)
         self.other_code_button_group.buttonToggled.connect(MainWindow.on_other_code_button_group_toggled)
         self.other_code_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
+        self.swift_code_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
 
         self.lang_selector.setCurrentIndex(-1)
         self.currency_selector.setCurrentIndex(-1)
