@@ -2,8 +2,9 @@ import ast
 import os
 import pathlib
 import sys
+from PySide2.QtCore import QFile
 
-from PySide2.QtWidgets import QApplication, QMainWindow
+from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PySide2.QtWidgets import QMessageBox
 from markdown import markdown
 from weasyprint import HTML
@@ -436,16 +437,15 @@ class MainWindow(QMainWindow):
         self.ui.generate_button.setEnabled(True)
 
     def on_generate(self):
+        pdf_path, _ = QFileDialog.getSaveFileName(self, caption="Save As", dir="Contract.pdf", filter="PDF (*.pdf)")
         md = self.get_markdown()
         html = markdown(md)
-        # TODO decide where to store files
-        html_path = pathlib.Path(sys.executable).parent / "contract.html"
+        html_path = pathlib.Path(pdf_path).with_suffix(".html")
         with open(html_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
             f.write(html)
             msg = "Saved html to " + str(html_path)
             QMessageBox.information(self, "Info", msg)
 
-        pdf_path = html_path.with_suffix(".pdf")
         HTML(string=html).write_pdf(pdf_path)
         msg = "Saved pdf to " + str(pdf_path)
         QMessageBox.information(self, "Info", msg)
