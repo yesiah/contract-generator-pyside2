@@ -5,8 +5,8 @@ import sys
 
 from PySide2.QtWidgets import QApplication, QMainWindow
 from PySide2.QtWidgets import QMessageBox
-from markdown import markdown as md2html
-from weasyprint import HTML as make_html
+from markdown import markdown
+from weasyprint import HTML
 
 import util
 from contract_generator_ui_model import Ui_MainWindow
@@ -346,7 +346,6 @@ class MainWindow(QMainWindow):
         self.check_mandatory_fields()
 
     def on_other_code_button_group_toggled(self, button, checked):
-        # TODO enable/disable swift code and other code text
         self.check_mandatory_fields()
 
     def check_mandatory_fields(self):
@@ -438,7 +437,7 @@ class MainWindow(QMainWindow):
 
     def on_execute(self):
         md = self.get_markdown()
-        html = md2html(md)
+        html = markdown(md)
         # TODO decide where to store files
         html_path = pathlib.Path(sys.executable).parent / "contract.html"
         with open(html_path, "w", encoding="utf-8", errors="xmlcharrefreplace") as f:
@@ -447,7 +446,7 @@ class MainWindow(QMainWindow):
             QMessageBox.information(self, "Info", msg)
 
         pdf_path = html_path.with_suffix(".pdf")
-        make_html(string=html).write_pdf(pdf_path)
+        HTML(string=html).write_pdf(pdf_path)
         msg = "Saved pdf to " + str(pdf_path)
         QMessageBox.information(self, "Info", msg)
 
