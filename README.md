@@ -1,11 +1,23 @@
 # contract-generator-pyside2
-Another contract generator built on PySide2
 
-Build:
+Another contract generator built on PySide2.
 
-`PYTHONOPTIMIZE=1 pyinstaller --clean --noconfirm contract_generator_app.spec`
+## Dependencies
 
-Available Fields
+- Python 3.6+
+- [markdown](https://pypi.org/project/Markdown/)
+- [PySide2](https://pypi.org/project/PySide2/)
+
+## Steps
+
+1. Go to `contract_generator_app.spec` and modify some directory settings to fit your environment
+2. Replace the template files to fit your need (see Available Fields and existing dummy templates for more information)
+3. Run pyinstaller to build your application (see Build)
+
+## Available Fields
+
+The following fields are supported inside `.template` files
+
   - Contract Templates
     - start_date
     - end_date
@@ -32,3 +44,9 @@ Available Fields
     - swift_code
     - other_code
     - other_code_text
+
+## Build
+
+To build, run the following command. `PYTHONOPTIMIZE=1` is optional.
+
+`PYTHONOPTIMIZE=1 pyinstaller --clean --noconfirm contract_generator_app.spec`
