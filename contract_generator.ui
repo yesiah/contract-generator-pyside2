@@ -1312,6 +1312,43 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <tabstops>
+  <tabstop>lang_selector</tabstop>
+  <tabstop>contract_template_selector</tabstop>
+  <tabstop>party_a_name_selector</tabstop>
+  <tabstop>party_a_representative_selector</tabstop>
+  <tabstop>party_a_registered_address_edit</tabstop>
+  <tabstop>party_a_contact_address_edit</tabstop>
+  <tabstop>party_b_name_edit</tabstop>
+  <tabstop>party_b_representative_edit</tabstop>
+  <tabstop>party_b_registered_address_edit</tabstop>
+  <tabstop>party_b_contact_address_edit</tabstop>
+  <tabstop>start_date_selector</tabstop>
+  <tabstop>period_checkbox</tabstop>
+  <tabstop>period_years_selector</tabstop>
+  <tabstop>period_months_selector</tabstop>
+  <tabstop>end_date_selector</tabstop>
+  <tabstop>signature_date_selector</tabstop>
+  <tabstop>payment_method_selector</tabstop>
+  <tabstop>currency_selector</tabstop>
+  <tabstop>cross_border_payment_yes</tabstop>
+  <tabstop>cross_border_payment_no</tabstop>
+  <tabstop>bank_account_edit</tabstop>
+  <tabstop>account_name_edit</tabstop>
+  <tabstop>name_of_the_bank_edit</tabstop>
+  <tabstop>bank_code_edit</tabstop>
+  <tabstop>name_of_the_branch_edit</tabstop>
+  <tabstop>branch_code_edit</tabstop>
+  <tabstop>swift_code_edit</tabstop>
+  <tabstop>country_of_the_bank_receiving_the_payment_edit</tabstop>
+  <tabstop>other_code_cnaps</tabstop>
+  <tabstop>other_code_skn_code</tabstop>
+  <tabstop>other_code_bsb_number</tabstop>
+  <tabstop>other_code_iban_code</tabstop>
+  <tabstop>other_code_edit</tabstop>
+  <tabstop>generate_button</tabstop>
+  <tabstop>scrollArea</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
