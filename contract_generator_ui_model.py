@@ -543,8 +543,6 @@ class Ui_MainWindow(object):
         self.party_b_name_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
         self.party_b_representative_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
         self.party_b_registered_address_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
-        self.start_date_selector.userDateChanged.connect(MainWindow.check_mandatory_fields)
-        self.end_date_selector.userDateChanged.connect(MainWindow.check_mandatory_fields)
         self.signature_date_selector.userDateChanged.connect(MainWindow.check_mandatory_fields)
         self.payment_method_selector.currentTextChanged.connect(MainWindow.check_mandatory_fields)
         self.currency_selector.currentTextChanged.connect(MainWindow.check_mandatory_fields)
@@ -561,6 +559,8 @@ class Ui_MainWindow(object):
         self.other_code_button_group.buttonToggled.connect(MainWindow.on_other_code_button_group_toggled)
         self.other_code_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
         self.swift_code_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
+        self.end_date_selector.userDateChanged.connect(MainWindow.on_end_date_selector_changed)
+        self.start_date_selector.userDateChanged.connect(MainWindow.on_start_date_selector_changed)
 
         self.lang_selector.setCurrentIndex(-1)
         self.currency_selector.setCurrentIndex(-1)

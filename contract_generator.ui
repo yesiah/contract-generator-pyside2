@@ -1210,38 +1210,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>start_date_selector</sender>
-   <signal>userDateChanged(QDate)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>check_mandatory_fields()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>437</x>
-     <y>447</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>395</x>
-     <y>340</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>end_date_selector</sender>
-   <signal>userDateChanged(QDate)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>check_mandatory_fields()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>437</x>
-     <y>489</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>395</x>
-     <y>340</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>signature_date_selector</sender>
    <signal>userDateChanged(QDate)</signal>
    <receiver>MainWindow</receiver>
@@ -1497,6 +1465,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>end_date_selector</sender>
+   <signal>userDateChanged(QDate)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_end_date_selector_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>318</x>
+     <y>473</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>396</x>
+     <y>340</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>start_date_selector</sender>
+   <signal>userDateChanged(QDate)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_start_date_selector_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>258</x>
+     <y>434</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>209</x>
+     <y>-9</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_language_selector_changed()</slot>
@@ -1507,6 +1507,8 @@
   <slot>on_cross_border_payment_button_group_toggled(QAbstractButton*,bool)</slot>
   <slot>on_other_code_button_group_toggled(QAbstractButton*,bool)</slot>
   <slot>on_generate()</slot>
+  <slot>on_end_date_selector_changed()</slot>
+  <slot>on_start_date_selector_changed()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="cross_border_payment_button_group"/>

@@ -332,6 +332,16 @@ class MainWindow(QMainWindow):
             self.ui.party_a_representative_selector.clear()
             party_a_representatives = self.party_a_template[self.ui.party_a_name_selector.currentText()]
             self.ui.party_a_representative_selector.addItems(party_a_representatives)
+    
+    def on_start_date_selector_changed(self):
+        if self.ui.end_date_selector.isEnabled() and self.ui.end_date_selector.date() < self.ui.start_date_selector.date():
+            QMessageBox.critical(self, "Invalid", "\n起始日不能晚於終止日\n\nEnd Date must be later than Start Date.")
+        self.check_mandatory_fields()
+
+    def on_end_date_selector_changed(self):
+        if self.ui.start_date_selector.isEnabled() and self.ui.end_date_selector.date() < self.ui.start_date_selector.date():
+            QMessageBox.critical(self, "Invalid", "\n起始日不能晚於終止日\n\nEnd Date must be later than Start Date.")
+        self.check_mandatory_fields()
 
     def on_payment_method_selector_changed(self):
         self.enable_controls_below_payment_method_selector(False)
@@ -357,7 +367,7 @@ class MainWindow(QMainWindow):
             print("lang wrong")
             return
 
-        if self.ui.start_date_selector.isEnabled() and self.ui.end_date_selector.isEnabled() and (self.ui.end_date_selector.date() < self.ui.start_date_selector.data()):
+        if self.ui.start_date_selector.isEnabled() and self.ui.end_date_selector.isEnabled() and (self.ui.end_date_selector.date() < self.ui.start_date_selector.date()):
             print("start date wrong")
             return
 
