@@ -516,7 +516,7 @@
              <bool>false</bool>
             </property>
             <property name="currentText">
-             <string>0</string>
+             <string>1</string>
             </property>
             <item>
              <property name="text">

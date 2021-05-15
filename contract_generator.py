@@ -2,8 +2,8 @@ import ast
 import os
 import pathlib
 import sys
-from PySide2.QtCore import QFile
 
+from PySide2.QtCore import QDate
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
 from PySide2.QtWidgets import QMessageBox
 from markdown import markdown
@@ -19,6 +19,8 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.init()
+
         # run_time_root = os.path.dirname(__file__)
         # contract_template_path = os.path.join(run_time_root, "templates/contract_templates/cht/中文契約範本.template")
         # QMessageBox.information(self, "Info", contract_template_path)
@@ -31,6 +33,11 @@ class MainWindow(QMainWindow):
         # with open(party_a_template_path, 'rb') as f:
         #     txt = f.read().decode('UTF-8')
         #     QMessageBox.information(self, "Info", txt)
+    
+    def init(self):
+        today = QDate.currentDate()
+        self.ui.start_date_selector.setDate(today)
+        self.ui.period_years_selector.setCurrentText("1")
 
     # getter ------------------------------------------------------------------
     def get_contract_template_path(self):
