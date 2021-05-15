@@ -340,6 +340,14 @@ class MainWindow(QMainWindow):
         if self.ui.end_date_selector.isEnabled() and self.ui.end_date_selector.date() < self.ui.start_date_selector.date():
             QMessageBox.critical(self, "Invalid", "\n起始日不能晚於終止日\n\nEnd Date must be later than Start Date.")
         self.check_mandatory_fields()
+    
+    def on_period_years_selector_changed(self):
+        # update end date
+        return
+
+    def on_period_months_selector_changed(self):
+        # update end date
+        return
 
     def on_end_date_selector_changed(self):
         if self.ui.start_date_selector.isEnabled() and self.ui.end_date_selector.date() < self.ui.start_date_selector.date():

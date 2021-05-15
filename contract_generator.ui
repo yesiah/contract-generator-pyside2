@@ -1323,8 +1323,8 @@
    <slot>on_payment_method_selector_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>363</x>
-     <y>604</y>
+     <x>378</x>
+     <y>646</y>
     </hint>
     <hint type="destinationlabel">
      <x>733</x>
@@ -1435,8 +1435,8 @@
    <slot>check_mandatory_fields()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>437</x>
-     <y>541</y>
+     <x>480</x>
+     <y>583</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1451,8 +1451,8 @@
    <slot>check_mandatory_fields()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>363</x>
-     <y>604</y>
+     <x>378</x>
+     <y>646</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1467,8 +1467,8 @@
    <slot>check_mandatory_fields()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>363</x>
-     <y>650</y>
+     <x>378</x>
+     <y>692</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1483,8 +1483,8 @@
    <slot>check_mandatory_fields()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>586</x>
-     <y>686</y>
+     <x>714</x>
+     <y>728</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1499,8 +1499,8 @@
    <slot>check_mandatory_fields()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>586</x>
-     <y>717</y>
+     <x>714</x>
+     <y>759</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1516,7 +1516,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>377</x>
-     <y>748</y>
+     <y>790</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1532,7 +1532,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>766</x>
-     <y>748</y>
+     <y>790</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1548,7 +1548,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>377</x>
-     <y>779</y>
+     <y>821</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1564,7 +1564,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>766</x>
-     <y>779</y>
+     <y>821</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1580,7 +1580,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>766</x>
-     <y>815</y>
+     <y>857</y>
     </hint>
     <hint type="destinationlabel">
      <x>395</x>
@@ -1659,8 +1659,8 @@
    <slot>check_mandatory_fields()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>653</x>
-     <y>849</y>
+     <x>766</x>
+     <y>901</y>
     </hint>
     <hint type="destinationlabel">
      <x>396</x>
@@ -1675,8 +1675,8 @@
    <slot>check_mandatory_fields()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>264</x>
-     <y>805</y>
+     <x>377</x>
+     <y>857</y>
     </hint>
     <hint type="destinationlabel">
      <x>396</x>
@@ -1691,8 +1691,8 @@
    <slot>on_end_date_selector_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>318</x>
-     <y>473</y>
+     <x>480</x>
+     <y>531</y>
     </hint>
     <hint type="destinationlabel">
      <x>396</x>
@@ -1716,6 +1716,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>period_years_selector</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_period_years_selector_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>227</x>
+     <y>469</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>443</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>period_months_selector</sender>
+   <signal>currentTextChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>on_period_months_selector_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>381</x>
+     <y>473</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>396</x>
+     <y>340</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>on_language_selector_changed()</slot>
@@ -1728,6 +1760,8 @@
   <slot>on_generate()</slot>
   <slot>on_end_date_selector_changed()</slot>
   <slot>on_start_date_selector_changed()</slot>
+  <slot>on_period_years_selector_changed()</slot>
+  <slot>on_period_months_selector_changed()</slot>
  </slots>
  <buttongroups>
   <buttongroup name="cross_border_payment_button_group"/>

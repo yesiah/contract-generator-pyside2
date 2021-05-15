@@ -630,6 +630,8 @@ class Ui_MainWindow(object):
         self.swift_code_edit.editingFinished.connect(MainWindow.check_mandatory_fields)
         self.end_date_selector.userDateChanged.connect(MainWindow.on_end_date_selector_changed)
         self.start_date_selector.userDateChanged.connect(MainWindow.on_start_date_selector_changed)
+        self.period_years_selector.currentTextChanged.connect(MainWindow.on_period_years_selector_changed)
+        self.period_months_selector.currentTextChanged.connect(MainWindow.on_period_months_selector_changed)
 
         self.lang_selector.setCurrentIndex(-1)
         self.currency_selector.setCurrentIndex(-1)
