@@ -36,8 +36,13 @@ class MainWindow(QMainWindow):
     
     def init(self):
         today = QDate.currentDate()
+        # end date must be set prior to start date, otherwise minmax constraint would change the start date
+        self.ui.end_date_selector.setDate(today.addYears(1).addDays(-1))
         self.ui.start_date_selector.setDate(today)
+        self.set_start_end_date_minmax()
         self.ui.period_years_selector.setCurrentText("1")
+
+        self.ui.signature_date_selector.setDate(today)
 
     # getter ------------------------------------------------------------------
     def get_contract_template_path(self):
@@ -204,14 +209,18 @@ class MainWindow(QMainWindow):
                         return ast.literal_eval(txt)
 
     # internal utils ----------------------------------------------------------
+    def set_start_end_date_minmax(self):
+        self.ui.start_date_selector.setMaximumDate(self.ui.end_date_selector.date())
+        self.ui.end_date_selector.setMinimumDate(self.ui.start_date_selector.date())
+
     def field2control(self, field):
         return {
             "contract_template": [self.ui.contract_template_label, self.ui.contract_template_selector],
             "start_date": [self.ui.start_date_label, self.ui.start_date_selector],
-            "end_date": [self.ui.end_date_label, self.ui.end_date_selector,
-                         self.ui.period_label,
-                         self.ui.period_years_label, self.ui.period_years_selector,
-                         self.ui.period_months_label, self.ui.period_months_selector],
+            "end_date": [self.ui.end_date_label, self.ui.end_date_selector, self.ui.period_checkbox],
+            "period": [self.ui.period_label,
+                       self.ui.period_years_label, self.ui.period_years_selector,
+                       self.ui.period_months_label, self.ui.period_months_selector],
             "party_a_name": [self.ui.party_a_name_label, self.ui.party_a_name_selector],
             "party_a_representative": [self.ui.party_a_representative_label, self.ui.party_a_representative_selector],
             "party_a_registered_address": [self.ui.party_a_registered_address_label, self.ui.party_a_registered_address_edit,
@@ -308,6 +317,25 @@ class MainWindow(QMainWindow):
                 self.ui.party_a_name_selector.clear()
                 self.ui.party_a_representative_selector.clear()
                 self.ui.party_a_name_selector.addItems(self.party_a_template.keys())
+    
+    def refresh_end_date_selector(self):
+        # read the value of period and update
+        start_date = self.ui.start_date_selector.date()
+        date = start_date
+        years = self.ui.period_years_selector.currentText()
+        months = self.ui.period_months_selector.currentText()
+        date = date.addYears(int(years))
+        date = date.addMonths(int(months))
+        date = date.addDays(-1)
+
+        self.ui.end_date_selector.setDate(start_date if date < start_date else date)
+    
+    def refresh_period_selector(self):
+        # read start date and end date, update period
+        start_date = self.ui.start_date_selector.date()
+        end_date = self.ui.end_date_selector.date()
+        self.ui.period_years_selector.setCurrentText(str(end_date.year() - start_date.year()))
+        self.ui.period_months_selector.setCurrentText(str(end_date.month() - start_date.month()))
 
     def refresh_payment_method_selector(self):
         if self.ui.payment_method_selector.isEnabled():
@@ -344,21 +372,25 @@ class MainWindow(QMainWindow):
             self.ui.party_a_representative_selector.addItems(party_a_representatives)
     
     def on_start_date_selector_changed(self):
-        if self.ui.end_date_selector.isEnabled() and self.ui.end_date_selector.date() < self.ui.start_date_selector.date():
-            QMessageBox.critical(self, "Invalid", "\n起始日不能晚於終止日\n\nEnd Date must be later than Start Date.")
+        if self.ui.period_checkbox.isEnabled() and self.ui.period_checkbox.isChecked():
+            self.refresh_end_date_selector()
+        self.set_start_end_date_minmax()
         self.check_mandatory_fields()
     
+    def on_period_checkbox_clicked(self, enable):
+        self.enable_field_controls(["period"], enable)
+        self.ui.end_date_selector.setReadOnly(enable)
+        if enable:
+            self.refresh_end_date_selector()
+    
     def on_period_years_selector_changed(self):
-        # update end date
-        return
+        self.refresh_end_date_selector()
 
     def on_period_months_selector_changed(self):
-        # update end date
-        return
+        self.refresh_end_date_selector()
 
     def on_end_date_selector_changed(self):
-        if self.ui.start_date_selector.isEnabled() and self.ui.end_date_selector.date() < self.ui.start_date_selector.date():
-            QMessageBox.critical(self, "Invalid", "\n起始日不能晚於終止日\n\nEnd Date must be later than Start Date.")
+        self.set_start_end_date_minmax()
         self.check_mandatory_fields()
 
     def on_payment_method_selector_changed(self):
