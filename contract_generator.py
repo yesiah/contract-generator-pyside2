@@ -201,7 +201,10 @@ class MainWindow(QMainWindow):
         return {
             "contract_template": [self.ui.contract_template_label, self.ui.contract_template_selector],
             "start_date": [self.ui.start_date_label, self.ui.start_date_selector],
-            "end_date": [self.ui.end_date_label, self.ui.end_date_selector],
+            "end_date": [self.ui.end_date_label, self.ui.end_date_selector,
+                         self.ui.period_label,
+                         self.ui.period_years_label, self.ui.period_years_selector,
+                         self.ui.period_months_label, self.ui.period_months_selector],
             "party_a_name": [self.ui.party_a_name_label, self.ui.party_a_name_selector],
             "party_a_representative": [self.ui.party_a_representative_label, self.ui.party_a_representative_selector],
             "party_a_registered_address": [self.ui.party_a_registered_address_label, self.ui.party_a_registered_address_edit,
